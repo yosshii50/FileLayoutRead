@@ -72,7 +72,10 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateFLRFile.vb" />
     <Compile Include="FLR_Field.vb" />
+    <Compile Include="FLR_File.vb" />
+    <Compile Include="FLR_Record.vb" />
     <Compile Include="Form1.vb">
       <SubType>Form</SubType>
     </Compile>

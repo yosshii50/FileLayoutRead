@@ -1,0 +1,9 @@
+C:\Users\yagi_yo\Documents\GitHub\FileLayoutRead\FileLayoutRead\bin\Debug\FileLayoutRead.exe
+C:\Users\yagi_yo\Documents\GitHub\FileLayoutRead\FileLayoutRead\bin\Debug\FileLayoutRead.pdb
+C:\Users\yagi_yo\Documents\GitHub\FileLayoutRead\FileLayoutRead\bin\Debug\FileLayoutRead.xml
+C:\Users\yagi_yo\Documents\GitHub\FileLayoutRead\FileLayoutRead\obj\x86\Debug\FileLayoutRead.Form1.resources
+C:\Users\yagi_yo\Documents\GitHub\FileLayoutRead\FileLayoutRead\obj\x86\Debug\FileLayoutRead.Resources.resources
+C:\Users\yagi_yo\Documents\GitHub\FileLayoutRead\FileLayoutRead\obj\x86\Debug\FileLayoutRead.vbproj.GenerateResource.Cache
+C:\Users\yagi_yo\Documents\GitHub\FileLayoutRead\FileLayoutRead\obj\x86\Debug\FileLayoutRead.exe
+C:\Users\yagi_yo\Documents\GitHub\FileLayoutRead\FileLayoutRead\obj\x86\Debug\FileLayoutRead.xml
+C:\Users\yagi_yo\Documents\GitHub\FileLayoutRead\FileLayoutRead\obj\x86\Debug\FileLayoutRead.pdb

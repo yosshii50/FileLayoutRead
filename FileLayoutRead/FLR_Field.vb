@@ -1,6 +1,7 @@
 ﻿Option Explicit On '型宣言を強制
 Option Strict On 'タイプ変換を厳密に
 
+'フィールド
 Public Class FLR_Field
 
     'フィールド名
@@ -38,6 +39,17 @@ Public Class FLR_Field
         End Get
         Set(ByVal value As FieldType_Enum)
             _FieldType = value
+        End Set
+    End Property
+
+    'サンプルパターン
+    Private _SamplePattern As String = ""
+    Public Property SamplePattern() As String
+        Get
+            Return _SamplePattern
+        End Get
+        Set(ByVal value As String)
+            _SamplePattern = value
         End Set
     End Property
 
