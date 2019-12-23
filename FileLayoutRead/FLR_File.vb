@@ -5,13 +5,14 @@ Option Strict On 'タイプ変換を厳密に
 
 '構成
 '　ファイル
-'　　+-レコード
-'　　| 　+-フィールド
-'　　+-レコード
-'　　  　+-フィールド
+'　　+-レコードタイプ
 '　　  　+-フィールド
 
 Public Class FLR_File
+
+    Public Data As New FLR_File_Data(Me)
+    Public Parameter As New FLR_File_Parameter(Me)
+    Public SampleData As New FLR_File_SampleData(Me)
 
     'レコード長 0:変動
     Private _RecordSize As Integer = 0
@@ -46,29 +47,25 @@ Public Class FLR_File
         End Set
     End Property
 
-    'レコード構成
-    Private Structure RecordConstitution_Str
-        Dim Record As FLR_Record
-        Dim ParentRecord As FLR_Record
-        Dim ChildRecord() As FLR_Record
-    End Structure
-    Private RecordConstitution() As RecordConstitution_Str
+    'レコード種類
+    Dim _RecordType() As FLR_RecordType
 
     'レコード種類の追加
-    Public Sub AddRecordType()
-        Call AddRecordType("")
+    Public Sub RecordTypeAdd()
+        Call RecordTypeAdd("")
     End Sub
-    Public Sub AddRecordType(ByVal RecordName As String)
+    Public Sub RecordTypeAdd(ByVal RecordTypeName As String)
 
-        If RecordConstitution Is Nothing Then
-            ReDim RecordConstitution(0)
+        If _RecordType Is Nothing Then
+            ReDim _RecordType(0)
         Else
-            ReDim Preserve RecordConstitution(RecordConstitution.Count)
+            ReDim Preserve _RecordType(_RecordType.Count)
         End If
 
-        With RecordConstitution(RecordConstitution.Count - 1)
-            .Record = New FLR_Record
-            .Record.RecordName = RecordName
+        _RecordType(_RecordType.Count - 1) = New FLR_RecordType
+
+        With RecordType(_RecordType.Count - 1)
+            .RecordTypeName = RecordTypeName
         End With
 
     End Sub
@@ -76,29 +73,30 @@ Public Class FLR_File
     'レコード種類の件数
     Public ReadOnly Property RecordTypeCount() As Integer
         Get
-            If RecordConstitution Is Nothing Then
+            If _RecordType Is Nothing Then
                 Return 0
             Else
-                Return RecordConstitution.Count
-            End If
-        End Get
-    End Property
-
-    '最大のレコード種類
-    Public ReadOnly Property LastRecord() As FLR_Record
-        Get
-            If RecordConstitution Is Nothing Then
-                Return Nothing
-            Else
-                Return RecordConstitution(RecordConstitution.Count - 1).Record
+                Return _RecordType.Count
             End If
         End Get
     End Property
 
     'レコード
-    Public ReadOnly Property Records(ByVal Index As Integer) As FLR_Record
+    Public ReadOnly Property RecordTypes() As FLR_RecordType()
         Get
-            Return RecordConstitution(Index).Record
+            Return _RecordType
+        End Get
+    End Property
+
+    Public ReadOnly Property RecordType(ByVal Index As Integer) As FLR_RecordType
+        Get
+            Return _RecordType(Index)
+        End Get
+    End Property
+
+    Public ReadOnly Property RecordTypeMax() As Integer
+        Get
+            Return _RecordType.Count - 1
         End Get
     End Property
 

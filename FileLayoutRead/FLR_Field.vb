@@ -52,5 +52,41 @@ Public Class FLR_Field
             _SamplePattern = value
         End Set
     End Property
+    Public Function GetSampleData() As String
+
+        Static WrkIdx As Integer = 0
+
+        Dim WrkStrs() As String = Split(_SamplePattern, ",")
+
+        If WrkIdx >= WrkStrs.Count Then
+            WrkIdx = 0
+        End If
+
+        Dim WrkStr As String = WrkStrs(WrkIdx)
+        Select Case WrkStr
+            Case "YYYYMMDD"
+                WrkStr = "20191231"
+            Case "HHNN"
+                WrkStr = "2359"
+            Case "SP"
+                WrkStr = Space(FieldLength)
+            Case ""
+                WrkStr = Space(FieldLength)
+            Case "CRLF"
+                WrkStr = vbCrLf
+            Case Else
+                If Strings.Left(WrkStr, 1) = "[" And Strings.Right(WrkStr, 1) = "]" Then
+                    WrkStr = Strings.Mid(WrkStr, 2, Len(WrkStr) - 2)
+                End If
+                If Strings.Left(WrkStr, 1) = """" And Strings.Right(WrkStr, 1) = """" Then
+                    WrkStr = Strings.Mid(WrkStr, 2, Len(WrkStr) - 2)
+                End If
+        End Select
+
+        WrkIdx = WrkIdx + 1
+
+        Return WrkStr
+
+    End Function
 
 End Class

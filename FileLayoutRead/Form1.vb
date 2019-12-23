@@ -3,28 +3,35 @@ Option Strict On 'タイプ変換を厳密に
 
 Public Class Form1
 
-    Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    Private Sub Button2_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button2.Click
 
-        Dim WrkStr As String = ""
+        Dim MyFLR_File As New FLR_File
 
-        For Each WrKLineData As String In System.IO.File.ReadLines("C:\Install\FileLayoutRead_Data\DataSet.txt", System.Text.Encoding.GetEncoding("Shift_JIS"))
+        Dim WrkStr As String = System.IO.File.ReadAllText(TextBox1.Text, System.Text.Encoding.GetEncoding("Shift_JIS"))
 
-            WrkStr = WrkStr & WrKLineData & vbCrLf
+        '設定情報からファイルレイアウト展開
+        Call MyFLR_File.Parameter.Read(WrkStr)
 
-        Next
+        'サンプルデータ生成
+        Call MyFLR_File.SampleData.Create(TextBox2.Text)
 
-        TextBox1.Text = WrkStr
+        MsgBox("済")
 
     End Sub
 
-    Private MyFLR_File As FLR_File
-
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
 
-        MyFLR_File = New FLR_File
+        Dim MyFLR_File As New FLR_File
+
+        Dim WrkStr As String = System.IO.File.ReadAllText(TextBox1.Text, System.Text.Encoding.GetEncoding("Shift_JIS"))
 
         '設定情報からファイルレイアウト展開
-        Call CreateFLRFile.Generate(MyFLR_File, TextBox1.Text)
+        Call MyFLR_File.Parameter.Read(WrkStr)
+
+        '読み込み実行
+        Call MyFLR_File.Data.Load(TextBox2.Text)
+
+        MsgBox("済")
 
     End Sub
 End Class
