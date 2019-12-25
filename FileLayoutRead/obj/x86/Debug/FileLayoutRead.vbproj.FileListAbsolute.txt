@@ -7,3 +7,5 @@ C:\Users\yagi_yo\Documents\GitHub\FileLayoutRead\FileLayoutRead\obj\x86\Debug\Fi
 C:\Users\yagi_yo\Documents\GitHub\FileLayoutRead\FileLayoutRead\obj\x86\Debug\FileLayoutRead.exe
 C:\Users\yagi_yo\Documents\GitHub\FileLayoutRead\FileLayoutRead\obj\x86\Debug\FileLayoutRead.xml
 C:\Users\yagi_yo\Documents\GitHub\FileLayoutRead\FileLayoutRead\obj\x86\Debug\FileLayoutRead.pdb
+C:\Users\yagi_yo\Documents\GitHub\FileLayoutRead\FileLayoutRead\obj\x86\Debug\FileLayoutRead.Form_Record.resources
+C:\Users\yagi_yo\Documents\GitHub\FileLayoutRead\FileLayoutRead\obj\x86\Debug\FileLayoutRead.Form_File.resources

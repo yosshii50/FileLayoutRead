@@ -31,13 +31,13 @@ Public Class FLR_File_SampleData
     End Property
 
     '生成実行
-    Public Sub Create()
-        Call Create("", "")
-    End Sub
-    Public Sub Create(ByVal FileName As String)
-        Call Create(FileName, "")
-    End Sub
-    Public Sub Create(ByVal FileName As String, ByVal SamplePattern As String)
+    Public Function Create() As Boolean
+        Return Create("", "")
+    End Function
+    Public Function Create(ByVal FileName As String) As Boolean
+        Return Create(FileName, "")
+    End Function
+    Public Function Create(ByVal FileName As String, ByVal SamplePattern As String) As Boolean
 
         If FileName = "" Then
             FileName = Me.FileName
@@ -55,7 +55,7 @@ Public Class FLR_File_SampleData
 
                     If .RecordTypes(WrkRIdx).RecordTypeName = WrkPtn Then
 
-                        For Each WrkField As FLR_Field In .RecordTypes(WrkRIdx).Fields
+                        For Each WrkField As FLR_FieldType In .RecordTypes(WrkRIdx).Fields
 
 
                             sw.Write(WrkField.GetSampleData)
@@ -73,6 +73,7 @@ Public Class FLR_File_SampleData
 
         sw.Close()
 
-    End Sub
+        Return True
+    End Function
 
 End Class

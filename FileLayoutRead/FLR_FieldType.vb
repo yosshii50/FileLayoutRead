@@ -1,8 +1,8 @@
 ﻿Option Explicit On '型宣言を強制
 Option Strict On 'タイプ変換を厳密に
 
-'フィールド
-Public Class FLR_Field
+'フィールドタイプ
+Public Class FLR_FieldType
 
     'フィールド名
     Private _FieldName As String = ""
@@ -31,6 +31,7 @@ Public Class FLR_Field
         None
         StrX
         Num9
+        BinX
     End Enum
     Private _FieldType As FieldType_Enum = FieldType_Enum.None
     Public Property FieldType() As FieldType_Enum
@@ -52,6 +53,25 @@ Public Class FLR_Field
             _SamplePattern = value
         End Set
     End Property
+
+    'DB用フィールド名
+    Private _DBFieldName As String = ""
+    Public Property DBFieldName() As String
+        Get
+            Return _DBFieldName
+        End Get
+        Set(ByVal value As String)
+
+            If value = "-" Then
+                _DBFieldName = ""
+            Else
+                _DBFieldName = value
+            End If
+
+        End Set
+    End Property
+
+    'サンプルデータ取得
     Public Function GetSampleData() As String
 
         Static WrkIdx As Integer = 0
@@ -88,5 +108,30 @@ Public Class FLR_Field
         Return WrkStr
 
     End Function
+
+    'サンプルパターンと一致しているか確認
+    Public Function CheckSamplePattern(ByRef WrkRecordData As Byte()) As Boolean
+
+        Dim WrkStrs() As String = Split(_SamplePattern, ",")
+
+        For Each WrkStr As String In WrkStrs
+
+            If Strings.Left(WrkStr, 1) = "[" And Strings.Right(WrkStr, 1) = "]" Then
+                WrkStr = Strings.Mid(WrkStr, 2, Len(WrkStr) - 2)
+
+                Dim CnvStr As String
+                CnvStr = System.Text.Encoding.GetEncoding(932).GetString(WrkRecordData)
+
+                If WrkStr = CnvStr Then
+                    Return True
+                End If
+
+            End If
+
+        Next
+
+        Return False
+    End Function
+
 
 End Class

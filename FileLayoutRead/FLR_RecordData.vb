@@ -11,6 +11,17 @@ Public Class FLR_RecordData
         End Get
     End Property
 
+    'フィールド
+    Private _FieldDatas() As FLR_FieldData
+    Public Property FieldDatas() As FLR_FieldData()
+        Get
+            Return _FieldDatas
+        End Get
+        Set(ByVal value As FLR_FieldData())
+            _FieldDatas = value
+        End Set
+    End Property
+
     'レコードデータの追加
     Public Sub RecordDataAdd(ByRef WrkRecordData As Byte(), ByRef WrkRecordType As FLR_RecordType, ByRef WrkParentRecordData As FLR_RecordData)
 
@@ -33,6 +44,23 @@ Public Class FLR_RecordData
             Call WrkParentRecordData.ChildRecordDataAdd(Me)
 
         End If
+
+        Dim StartPos As Integer = 0
+        For Each WrkFieldType As FLR_FieldType In _RecordType.Fields
+
+            If _FieldDatas Is Nothing Then
+                ReDim _FieldDatas(0)
+            Else
+                ReDim Preserve _FieldDatas(_FieldDatas.Count)
+            End If
+
+            _FieldDatas(_FieldDatas.Count - 1) = New FLR_FieldData
+
+            'フィールドデータ
+            Call _FieldDatas(_FieldDatas.Count - 1).FieldDataAdd(_RecordData, WrkFieldType, StartPos)
+
+            StartPos = StartPos + WrkFieldType.FieldLength
+        Next
 
     End Sub
 
@@ -70,5 +98,53 @@ Public Class FLR_RecordData
         _ChildRecordData(_ChildRecordData.Count - 1) = WrkChildRecordData
 
     End Sub
+
+    'Insert文用SQL生成
+    Public Function GetInsertTableListStr() As String
+
+        Dim IsFirst As Boolean
+        Dim WrkStr As String = ""
+
+        WrkStr = WrkStr & "INSERT INTO " & RecordType.DB_TableName & vbCrLf
+        IsFirst = True
+        For Each WrkFieldData As FLR_FieldData In FieldDatas
+            If WrkFieldData.FieldType.DBFieldName <> "" Then
+
+                If IsFirst = True Then
+                    WrkStr = WrkStr & "("
+                Else
+                    WrkStr = WrkStr & ","
+                End If
+                IsFirst = False
+
+                WrkStr = WrkStr & WrkFieldData.FieldType.DBFieldName & vbCrLf
+
+            End If
+        Next
+        WrkStr = WrkStr & ")" & vbCrLf
+        WrkStr = WrkStr & "VALUES" & vbCrLf
+        IsFirst = True
+        For Each WrkFieldData As FLR_FieldData In FieldDatas
+            If WrkFieldData.FieldType.DBFieldName <> "" Then
+
+                If IsFirst = True Then
+                    WrkStr = WrkStr & "("
+                Else
+                    WrkStr = WrkStr & ","
+                End If
+                IsFirst = False
+
+                If WrkFieldData.FieldType.FieldType = FLR_FieldType.FieldType_Enum.Num9 Then
+                    WrkStr = WrkStr & WrkFieldData.GetString() & vbCrLf
+                Else
+                    WrkStr = WrkStr & "'" & WrkFieldData.GetString() & "'" & vbCrLf
+                End If
+
+            End If
+        Next
+        WrkStr = WrkStr & ")" & vbCrLf
+
+        Return WrkStr
+    End Function
 
 End Class

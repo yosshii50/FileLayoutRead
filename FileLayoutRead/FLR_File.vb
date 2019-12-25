@@ -13,6 +13,7 @@ Public Class FLR_File
     Public Data As New FLR_File_Data(Me)
     Public Parameter As New FLR_File_Parameter(Me)
     Public SampleData As New FLR_File_SampleData(Me)
+    Public DB As New FLR_DB(Me)
 
     'レコード長 0:変動
     Private _RecordSize As Integer = 0
@@ -44,6 +45,17 @@ Public Class FLR_File
         End Get
         Set(ByVal value As String)
             _FileName = value
+        End Set
+    End Property
+
+    'DB接続文字列
+    Private _DBConnect As String = ""
+    Public Property DBConnect() As String
+        Get
+            Return _DBConnect
+        End Get
+        Set(ByVal value As String)
+            _DBConnect = value
         End Set
     End Property
 

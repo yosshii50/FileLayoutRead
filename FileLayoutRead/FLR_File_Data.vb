@@ -2,12 +2,15 @@
 Option Strict On 'タイプ変換を厳密に
 
 '構成
-'　ファイル
+'　ファイルデータ
 '　　+-レコードデータ
-'　　| 　+-フィールド
+'　　| 　+-レコードタイプ
+'　　| 　  　+-フィールド
+'　　| 　  　+-フィールド
 '　　+-レコードデータ
-'　　  　+-フィールド
-'　　  　+-フィールド
+'　　  　+-レコードタイプ
+'　　  　  　+-フィールド
+'　　  　  　+-フィールド
 
 Public Class FLR_File_Data
 
@@ -16,34 +19,35 @@ Public Class FLR_File_Data
     End Sub
     Private BaseFLR_File As FLR_File
 
-    'レコード構成
-    Private Structure RecordConstitution_Str
-        Dim RecordData() As Byte
-        Dim RecordType As FLR_RecordType
-        Dim ParentRecordData As FLR_RecordType
-        Dim ChildRecordData() As FLR_RecordType
-    End Structure
-    Private RecordConstitution() As RecordConstitution_Str
+    'レコードデータ
+    Private _RecordDatas() As FLR_RecordData
+    Public ReadOnly Property RecordDatas() As FLR_RecordData()
+        Get
+            Return _RecordDatas
+        End Get
+    End Property
 
     '読み込み実行
     Public Sub Load()
         Call Load(BaseFLR_File.FileName)
     End Sub
-    Public Sub Load(ByVal FileName As String)
+    Public Function Load(ByVal FileName As String) As Boolean
 
-        If FileName = "" Then
-            FileName = BaseFLR_File.FileName
+        If FileName <> "" Then
+            BaseFLR_File.FileName = FileName
         End If
 
         'データファイルオープン
         Dim WrkFileStream As System.IO.FileStream
-        WrkFileStream = New System.IO.FileStream(FileName, System.IO.FileMode.Open, System.IO.FileAccess.Read)
+        WrkFileStream = New System.IO.FileStream(BaseFLR_File.FileName, System.IO.FileMode.Open, System.IO.FileAccess.Read)
 
         'データ読み込み領域
         Dim WrkBuf(BaseFLR_File.RecordSize - 1) As Byte
 
         '残りのデータサイズ
         Dim WrkRemainSize As Integer = CInt(WrkFileStream.Length)
+
+        Erase _RecordDatas
 
         While WrkRemainSize > 0
 
@@ -53,21 +57,30 @@ Public Class FLR_File_Data
             WrkReadSize = WrkFileStream.Read(WrkBuf, 0, Math.Min(BaseFLR_File.RecordSize, WrkRemainSize))
 
             For Each WrkRecordType As FLR_RecordType In BaseFLR_File.RecordTypes
-                'BaseFLR_File.Records
 
+                '識別パターンと一致しているか確認
+                If WrkRecordType.CheckPattern(WrkBuf) = True Then
 
+                    If _RecordDatas Is Nothing Then
+                        ReDim _RecordDatas(0)
+                    Else
+                        ReDim Preserve _RecordDatas(_RecordDatas.Count)
+                    End If
+                    _RecordDatas(_RecordDatas.Count - 1) = New FLR_RecordData
 
+                    'レコードデータの追加
+                    Call _RecordDatas(_RecordDatas.Count - 1).RecordDataAdd(WrkBuf, WrkRecordType, Nothing)
+
+                    Exit For
+                End If
 
             Next
-
-
-
-
 
             WrkRemainSize -= WrkReadSize
         End While
 
         WrkFileStream.Close()
 
-    End Sub
+        Return True
+    End Function
 End Class
