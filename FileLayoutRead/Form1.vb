@@ -24,6 +24,11 @@ Public Class Form1
 
             TextBox3.Text = TextBox3.Text & WrkStr
 
+            'データファイル取得
+            If MyFLR_File.FileName <> "" Then
+                TxtData.Text = MyFLR_File.FileName
+            End If
+
         End If
     End Sub
     Private Function LoadConfig(ByRef WrkFLR_File As FLR_File, ByVal ConfigFileName As String) As Boolean

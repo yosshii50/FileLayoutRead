@@ -41,12 +41,6 @@ Public Class FLR_File_Parameter
                 BaseFLR_File.FileName = RetStr
             End If
 
-            '[SAMPLEFILE]取得
-            RetStr = GetSettingInformation(WrkStr, "SAMPLEFILE")
-            If Not RetStr Is Nothing Then
-                BaseFLR_File.SampleData.FileName = RetStr
-            End If
-
             '[SAMPLEPATTERN]取得
             RetStr = GetSettingInformation(WrkStr, "SAMPLEPATTERN")
             If Not RetStr Is Nothing Then

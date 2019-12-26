@@ -8,17 +8,6 @@ Public Class FLR_File_SampleData
     End Sub
     Private BaseFLR_File As FLR_File
 
-    '生成するサンプルファイルのファイル名
-    Private _FileName As String = ""
-    Public Property FileName() As String
-        Get
-            Return _FileName
-        End Get
-        Set(ByVal value As String)
-            _FileName = value
-        End Set
-    End Property
-
     '生成するサンプルデータのパターン
     Private _DataPattern As String = ""
     Public Property DataPattern() As String
@@ -40,7 +29,7 @@ Public Class FLR_File_SampleData
     Public Function Create(ByVal FileName As String, ByVal SamplePattern As String) As Boolean
 
         If FileName = "" Then
-            FileName = Me.FileName
+            FileName = BaseFLR_File.FileName
         End If
         If SamplePattern = "" Then
             SamplePattern = Me.DataPattern

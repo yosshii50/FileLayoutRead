@@ -51,7 +51,7 @@ Partial Class Form1
         Me.TxtConfig.Name = "TxtConfig"
         Me.TxtConfig.Size = New System.Drawing.Size(504, 19)
         Me.TxtConfig.TabIndex = 4
-        Me.TxtConfig.Text = "C:\Install\FileLayoutRead_Data\DataSet.txt"
+        Me.TxtConfig.Text = "C:\Install\FileLayoutRead_Data\ConfigFile.txt"
         '
         'TxtData
         '
@@ -59,7 +59,7 @@ Partial Class Form1
         Me.TxtData.Name = "TxtData"
         Me.TxtData.Size = New System.Drawing.Size(504, 19)
         Me.TxtData.TabIndex = 5
-        Me.TxtData.Text = "C:\Install\FileLayoutRead_Data\SampleData.TXT"
+        Me.TxtData.Text = "DataFilePath"
         '
         'Panel1
         '

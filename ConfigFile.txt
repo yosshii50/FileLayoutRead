@@ -1,0 +1,46 @@
+
+// RECSIZE=256 // レコード長
+RECSIZE=45 // レコード長
+FILENAME=C:\Install\FileLayoutRead_Data\SampleData.TXT
+
+// サンプルデータパターン
+SAMPLEPATTERN=00,01,01
+           // ↑[RECTYPE]を指定
+
+// データベース接続設定
+DBCONNECT=user/pass@//server:1521/orcl
+
+// 実行結果
+//         
+//         SQL> select * from TXT_DATA;
+//         
+//         KB NO   YMD      TORC GYO  SHCD   SURYO     URITNK    URIKNG
+//         -- ---- -------- ---- ---- ------ --------- --------- ---------
+//         00 0001 20191231 0001
+//         01 0001               0001 100000 123456712 123456712 123456789
+//         01 0002               0002 100000 123456712 123456712 123456789
+//         
+
+TABLEADDSTR=PCTFREE 10 PCTUSED 40
+TABLEADDSTR=STORAGE ( INITIAL 256K NEXT 256K MINEXTENTS 1 MAXEXTENTS UNLIMITED PCTINCREASE 0 )
+
+RECTYPE=00	// ヘッダー
+TABLENAME=TXT_DATA
+2	X	KBN		[00]			// データ区分 00:ヘッダー 01:明細
+4	X	NO		"0001","0002","0003"	// 伝票番号
+8	X	YMD		YYYYMMDD		// 伝票日付
+4	X	TORCD		"0001","0002","0003"	// 取引先
+25	X	-		SP			// 予備
+2	B	-		CRLF
+
+RECTYPE=01	// 明細
+TABLENAME=TXT_DATA
+2	X	KBN		[01]			// データ区分 00:ヘッダー 01:明細
+4	X	NO		"0001","0002","0003"	// 伝票番号
+4	X	GYO		"0001","0002","0003"	// 行番号
+6	X	SHCD		"100000"		// 商品コード
+9	X	SURYO		123456712		// 数量少数2桁
+9	X	URITNK		123456712		// 単価少数2桁
+9	X	URIKNG		123456789		// 金額
+2	B	-		CRLF
+
