@@ -95,12 +95,15 @@ Public Class FLR_FieldType
             Case "CRLF"
                 WrkStr = vbCrLf
             Case Else
-                If Strings.Left(WrkStr, 1) = "[" And Strings.Right(WrkStr, 1) = "]" Then
-                    WrkStr = Strings.Mid(WrkStr, 2, Len(WrkStr) - 2)
-                End If
-                If Strings.Left(WrkStr, 1) = """" And Strings.Right(WrkStr, 1) = """" Then
-                    WrkStr = Strings.Mid(WrkStr, 2, Len(WrkStr) - 2)
-                End If
+
+                WrkStr = StrStEdDel(WrkStr, "[", "]")
+                'If Strings.Left(WrkStr, 1) = "[" And Strings.Right(WrkStr, 1) = "]" Then
+                '    WrkStr = Strings.Mid(WrkStr, 2, Len(WrkStr) - 2)
+                'End If
+                WrkStr = StrStEdDel(WrkStr)
+                'If Strings.Left(WrkStr, 1) = """" And Strings.Right(WrkStr, 1) = """" Then
+                '    WrkStr = Strings.Mid(WrkStr, 2, Len(WrkStr) - 2)
+                'End If
 
                 WrkStr = Strings.Left(WrkStr & Space(FieldLength), FieldLength)
 

@@ -51,7 +51,7 @@ Partial Class Form1
         Me.TxtConfig.Name = "TxtConfig"
         Me.TxtConfig.Size = New System.Drawing.Size(504, 19)
         Me.TxtConfig.TabIndex = 4
-        Me.TxtConfig.Text = "C:\Install\FileLayoutRead_Data\ConfigFile.txt"
+        Me.TxtConfig.Text = "C:\Install\GitHub_Data\ConfigFile.txt"
         '
         'TxtData
         '
@@ -159,8 +159,6 @@ Partial Class Form1
 
     End Sub
     Friend WithEvents Button2 As System.Windows.Forms.Button
-    Friend WithEvents TxtConfig As System.Windows.Forms.TextBox
-    Friend WithEvents TxtData As System.Windows.Forms.TextBox
     Friend WithEvents Panel1 As System.Windows.Forms.Panel
     Friend WithEvents Button1 As System.Windows.Forms.Button
     Friend WithEvents TextBox3 As System.Windows.Forms.TextBox
@@ -169,5 +167,7 @@ Partial Class Form1
     Friend WithEvents Button3 As System.Windows.Forms.Button
     Friend WithEvents Button5 As System.Windows.Forms.Button
     Friend WithEvents Button4 As System.Windows.Forms.Button
+    Public WithEvents TxtConfig As System.Windows.Forms.TextBox
+    Public WithEvents TxtData As System.Windows.Forms.TextBox
 
 End Class

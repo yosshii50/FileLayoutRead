@@ -82,6 +82,7 @@
     <Compile Include="FLR_FieldType.vb" />
     <Compile Include="FLR_File.vb" />
     <Compile Include="FLR_File_Data.vb" />
+    <Compile Include="FLR_CommonMdl.vb" />
     <Compile Include="FLR_RecordData.vb" />
     <Compile Include="FLR_RecordType.vb" />
     <Compile Include="Form1.vb">

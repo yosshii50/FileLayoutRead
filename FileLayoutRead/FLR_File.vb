@@ -37,6 +37,17 @@ Public Class FLR_File
         End Set
     End Property
 
+    'コンフィグファイル名
+    Private _ConfigFileName As String = ""
+    Public Property ConfigFileName() As String
+        Get
+            Return _ConfigFileName
+        End Get
+        Set(ByVal value As String)
+            _ConfigFileName = value
+        End Set
+    End Property
+
     'ファイル名
     Private _FileName As String = ""
     Public Property FileName() As String

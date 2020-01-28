@@ -20,10 +20,20 @@ Public Class FLR_File_Data
     Private BaseFLR_File As FLR_File
 
     'レコードデータ
-    Private _RecordDatas() As FLR_RecordData
+    Private _RecordDatas() As FLR_RecordData 'Idx0から使用
     Public ReadOnly Property RecordDatas() As FLR_RecordData()
         Get
             Return _RecordDatas
+        End Get
+    End Property
+    Public ReadOnly Property RecordCount() As Integer
+        Get
+            If _RecordDatas Is Nothing Then
+                Return 0
+            Else
+                Return _RecordDatas.Count
+            End If
+
         End Get
     End Property
 
@@ -39,7 +49,22 @@ Public Class FLR_File_Data
 
         'データファイルオープン
         Dim WrkFileStream As System.IO.FileStream
-        WrkFileStream = New System.IO.FileStream(BaseFLR_File.FileName, System.IO.FileMode.Open, System.IO.FileAccess.Read)
+        Try
+            WrkFileStream = New System.IO.FileStream(BaseFLR_File.FileName, System.IO.FileMode.Open, System.IO.FileAccess.Read)
+        Catch ex As System.IO.FileNotFoundException
+            MsgBox("データファイルが見つかりません。")
+            Return False
+        Catch ex As System.IO.DirectoryNotFoundException
+            MsgBox("ファイルパスが見つかりません。")
+            Return False
+        Catch ex As System.NotSupportedException
+            MsgBox("ファイルパス形式に対応していません。")
+            Return False
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+            MsgBox("データファイルの読み込みに失敗しました。")
+            Return False
+        End Try
 
         'データ読み込み領域
         Dim WrkBuf(BaseFLR_File.RecordSize - 1) As Byte

@@ -12,8 +12,26 @@ Public Class FLR_File_Parameter
     'ファイルを指定して生成実行
     Public Function LoadFile(ByVal ReadFileName As String) As Boolean
 
+        BaseFLR_File.ConfigFileName = StrStEdDel(ReadFileName)
+
         '設定情報からファイルレイアウト展開
-        Dim WrkStr As String = System.IO.File.ReadAllText(ReadFileName, System.Text.Encoding.GetEncoding("Shift_JIS"))
+        Dim WrkStr As String
+        Try
+            WrkStr = System.IO.File.ReadAllText(BaseFLR_File.ConfigFileName, System.Text.Encoding.GetEncoding("Shift_JIS"))
+        Catch ex As System.IO.FileNotFoundException
+            MsgBox("定義ファイルが見つかりません。")
+            Return False
+        Catch ex As System.IO.DirectoryNotFoundException
+            MsgBox("定義ファイルパスが見つかりません。")
+            Return False
+        Catch ex As System.NotSupportedException
+            MsgBox("定義ファイルパス形式に対応していません。")
+            Return False
+        Catch ex As Exception
+            MsgBox(ex.ToString)
+            MsgBox("定義ファイルの読み込みに失敗しました。")
+            Return False
+        End Try
 
         If Load(WrkStr) = False Then
             Return False
@@ -38,7 +56,7 @@ Public Class FLR_File_Parameter
             '[FILENAME]取得
             RetStr = GetSettingInformation(WrkStr, "FILENAME")
             If Not RetStr Is Nothing Then
-                BaseFLR_File.FileName = RetStr
+                BaseFLR_File.FileName = StrStEdDel(RetStr)
             End If
 
             '[SAMPLEPATTERN]取得
@@ -103,6 +121,10 @@ Public Class FLR_File_Parameter
 
     'DBTableの生成
     Private Sub CreateDBTable(ByRef WrkFLR_File As FLR_File)
+
+        If WrkFLR_File.RecordTypes Is Nothing Then
+            Exit Sub
+        End If
 
         For Each WrkRecordType As FLR_RecordType In WrkFLR_File.RecordTypes
 
