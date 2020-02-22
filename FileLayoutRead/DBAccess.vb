@@ -104,7 +104,14 @@ Public Module DBAccess
                 'Insert文用SQL生成
                 Dim WrkStr As String = WrkRecordData.GetInsertTableListStr()
 
-                Clipboard.SetText(WrkStr) 'デバッグ用
+                'Clipboard.SetText(WrkStr) 'デバッグ用
+
+                'Debug.WriteLine(WrkStr)
+                'If InStr(WrkStr, "'1740'") > 0 Then
+                '    If InStr(WrkStr, "'1800'") > 0 Then
+                '        Debug.WriteLine(WrkStr)
+                '    End If
+                'End If
 
                 cmd1.CommandText = WrkStr
                 cmd1.ExecuteNonQuery()

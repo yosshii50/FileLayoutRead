@@ -5,6 +5,25 @@ Public Class Form1
 
     Dim MyFLR_File As FLR_File
 
+    Public Sub FromStart(ByVal GetConfigFileName As String, ByVal GetDataFileName As String)
+
+        Call Me.Show()
+
+        TxtConfig.Text = GetConfigFileName
+        TxtData.Text = GetDataFileName
+
+    End Sub
+
+    Private Sub Form1_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
+        '実行パス取得
+        Dim WrkExeName As String
+        WrkExeName = System.Reflection.Assembly.GetExecutingAssembly().Location
+        WrkExeName = System.IO.Path.GetFileNameWithoutExtension(WrkExeName)
+        TxtConfig.Text = WrkExeName & ".conf.txt"
+
+    End Sub
+
     '定義ファイル読込
     Private Sub Button3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button3.Click
         If LoadConfig(MyFLR_File, TxtConfig.Text) = True Then
@@ -19,7 +38,11 @@ Public Class Form1
 
             For Each WrkDBTable As FLR_DBTable In MyFLR_File.DB.DBTables
                 WrkStr = WrkStr & WrkDBTable.TableName & " "
-                WrkStr = WrkStr & WrkDBTable.DBFields.Count & "項目" & vbCrLf
+                If WrkDBTable.DBFields Is Nothing Then
+                    WrkStr = WrkStr & "項目なし" & vbCrLf
+                Else
+                    WrkStr = WrkStr & WrkDBTable.DBFields.Count & "項目" & vbCrLf
+                End If
             Next
 
             TextBox3.Text = TextBox3.Text & WrkStr
@@ -135,4 +158,30 @@ Public Class Form1
         Return True
     End Function
 
+    Private Sub Button6_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button6.Click
+
+        'OpenFileDialogクラスのインスタンスを作成
+        Dim WrkOpenFile As New OpenFileDialog()
+
+        With WrkOpenFile
+
+            .FileName = System.IO.Path.GetFileName(TxtData.Text)
+            If TxtData.Text <> "" Then
+                .InitialDirectory = System.IO.Path.GetDirectoryName(TxtData.Text)
+            End If
+            .Filter = "すべてのファイル(*.*)|*.*"
+            .FilterIndex = 1
+            '.Title = "開くファイルを選択してください"
+            ''ダイアログボックスを閉じる前に現在のディレクトリを復元するようにする
+            'ofd.RestoreDirectory = True
+
+            'ダイアログを表示する
+            If .ShowDialog() = DialogResult.OK Then
+                'OKボタンがクリックされたとき、選択されたファイル名を表示する
+                TxtData.Text = .FileName
+            End If
+
+        End With
+
+    End Sub
 End Class

@@ -33,6 +33,7 @@ Partial Class Form1
         Me.Button3 = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
         Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.Button6 = New System.Windows.Forms.Button()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -57,12 +58,13 @@ Partial Class Form1
         '
         Me.TxtData.Location = New System.Drawing.Point(76, 28)
         Me.TxtData.Name = "TxtData"
-        Me.TxtData.Size = New System.Drawing.Size(504, 19)
+        Me.TxtData.Size = New System.Drawing.Size(453, 19)
         Me.TxtData.TabIndex = 5
         Me.TxtData.Text = "DataFilePath"
         '
         'Panel1
         '
+        Me.Panel1.Controls.Add(Me.Button6)
         Me.Panel1.Controls.Add(Me.Button5)
         Me.Panel1.Controls.Add(Me.Button4)
         Me.Panel1.Controls.Add(Me.Label2)
@@ -143,6 +145,15 @@ Partial Class Form1
         Me.TextBox3.TabIndex = 8
         Me.TextBox3.WordWrap = False
         '
+        'Button6
+        '
+        Me.Button6.Location = New System.Drawing.Point(535, 28)
+        Me.Button6.Name = "Button6"
+        Me.Button6.Size = New System.Drawing.Size(54, 19)
+        Me.Button6.TabIndex = 28
+        Me.Button6.Text = "変更"
+        Me.Button6.UseVisualStyleBackColor = True
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 12.0!)
@@ -169,5 +180,6 @@ Partial Class Form1
     Friend WithEvents Button4 As System.Windows.Forms.Button
     Public WithEvents TxtConfig As System.Windows.Forms.TextBox
     Public WithEvents TxtData As System.Windows.Forms.TextBox
+    Friend WithEvents Button6 As System.Windows.Forms.Button
 
 End Class
