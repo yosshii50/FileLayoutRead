@@ -43,7 +43,9 @@ Public Class FLR_File_Parameter
     '生成実行
     Public Function Load(ByVal BaseString As String) As Boolean
 
-        For Each WrkStr As String In Split(BaseString, vbCrLf)
+        BaseString = BaseString.Replace(vbCr, "")
+
+        For Each WrkStr As String In Split(BaseString, vbLf)
 
             Dim RetStr As String
 
